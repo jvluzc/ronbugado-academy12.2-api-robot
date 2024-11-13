@@ -34,6 +34,7 @@ Login E Armazenar Token
 #Este teste cria uma nova empresa utilizando o token obtido no login
 Criar Nova Empresa
     [Arguments]    
+    # dados
     ...    ${corporateName}    
     ...    ${registerCompany}    
     ...    ${mail}    
@@ -41,8 +42,10 @@ Criar Nova Empresa
     ...    ${responsibleContact}    
     ...    ${telephone}    
     ...    ${serviceDescription}
-    #address:   
+    # address:   
     ...    ${zipCode}    ${city}    ${state}    ${district}    ${street}    ${number}    ${complement}    ${country}
+    # status code
+    ...    ${expectativa_statusCode}
     
     # Faz o Login Admin e armazemna o token gerado
     Login E Armazenar Token
@@ -83,11 +86,13 @@ Criar Nova Empresa
     Log    ${response.json()}
 
     # Valida o status code
-    Should Be Equal As Numbers    ${response.status_code}    201
+    Should Be Equal As Numbers    ${response.status_code}    ${expectativa_statusCode}
 
     # Opcional: Validar os dados retornados na resposta
     #${corporateName}=    Set Variable    ${response.json()['corporateName']}
     #Should Be Equal     ${corporateName}    bshdjvjdadavhjdvjdsaj
+
+
 
 Editar Empresa Cadastrada
     [Arguments]    
