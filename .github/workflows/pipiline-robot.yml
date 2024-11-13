@@ -13,7 +13,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: https://jvluzc.github.io/ronbuagdo-academy12.2-api-robot/report.html
+      url: https://jvluzc.github.io/ronbugado-academy12.2-api-robot/report.html
 
     steps:
       - name: Clonando para o Repositorio na Maquina Virtual
