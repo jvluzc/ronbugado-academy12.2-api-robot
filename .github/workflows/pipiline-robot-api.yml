@@ -7,6 +7,7 @@ jobs:
     name: API Tests - Robot
     runs-on: ubuntu-latest
 
+    # Permissões e Ambiente para disponibilizar o Reporte de Testes no GitHub Pages
     permissions:
       contents: read
       pages: write
@@ -16,19 +17,19 @@ jobs:
       url: https://jvluzc.github.io/ronbugado-academy12.2-api-robot/report.html
 
     steps:
-      - name: Clonando para o Repositorio na Maquina Virtual
+      - name: Etapa 1 - Clonar Repositório do Projeto para a Máquina Virtual do GitHub Actions
         # run: echo clonando para o repositorio na maquina virtual
         uses: actions/checkout@v4
  
 
-      - name: Instalação do Python
+      - name: Etapa 2 - Instalação do Python
         # run: echo Instalação da versão 3.12 do Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
  
 
-      - name: Instalação das depedências do Projeto
+      - name: Etapa 3 - Instalação das Depedências do Projeto
         # run: echo Instalação das depedências do Projeto
         run: |
           pip install setuptools
@@ -38,31 +39,33 @@ jobs:
           pip install robotframework-jsonlibrary
  
 
-      - name: Executando os testes de API do Robot
+      - name: Etapa 4 - Executar Testes de API do Robot Framework
         # run: echo Executando os testes de API do Robot
         run: |
           robot --outputdir results/ tests/
 
 
-      - name: Salvando o Report dos Testes
+      - name: Etapa 5 - Salvar Relatórios dos Testes Executados
         # run: echo Salvando o Report dos Testes
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: robot-framework-report
           path: results/
 
 
-      - name: Setup Pages
+      - name: Etapa 6 - Configurar GitHub Pages para Hospedagem dos Relatórios
         uses: actions/configure-pages@v5
  
 
-      - name: Upload artifact
+      - name: Etapa 7 - Fazer Upload dos Relatórios Gerados
         uses: actions/upload-pages-artifact@v3
+        if: always()
         with:
           path: results/
  
           
-      - name: Deploy to Github Pages
+      - name: Etapa 8 - Publicar Relatórios de Testes no GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
         
